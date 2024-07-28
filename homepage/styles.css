@@ -1,0 +1,38 @@
+body {  
+    display: flex;  
+    flex-direction: column;  
+    align-items: center;  
+    background-color: #f0f0f0;  
+    font-family: Arial, sans-serif;  
+    height: 100vh;  
+    margin: 0;  
+}  
+
+h1 {  
+    margin: 20px 0;  
+}  
+
+#soundscape {  
+    width: 80%;  
+    height: 80%;  
+    display: flex;  
+    justify-content: center;  
+    align-items: center;  
+    flex-wrap: wrap;  
+}  
+
+.sound-node {  
+    width: 100px;  
+    height: 100px;  
+    border-radius: 50%;  
+    margin: 20px;  
+    display: flex;  
+    justify-content: center;  
+    align-items: center;  
+    cursor: pointer;  
+    transition: transform 0.2s;  
+}  
+
+.sound-node:hover {  
+    transform: scale(1.1);  
+}

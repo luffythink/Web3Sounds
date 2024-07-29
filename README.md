@@ -36,7 +36,7 @@
 
 ## 产品功能框架
 
-待完善：
+目前 Demo 版极简功能：
 
 1. **声音图景展示**
    - **网状图设计**：使用图形库（如 D3.js、Three.js 或 PixiJS）来实现声音的网状图。每个节点代表不同的声音，节点之间可能有连接线表示声音的关系或相似度。
@@ -91,9 +91,18 @@
     - 前端从合约获取文件的 EthStorage 哈希
     - 前端从 EthStorage 获取音频文件并播放
 
+## 产品部署
+
+前端框架、FlatDirectory contract，参考[这里](https://github.com/ethstorage/web3url-website/tree/master)：
+
+待完善。
+
 ## 产品声明
 
 本产品开源开放，每一个认同此产品愿景的小伙伴，都可以加入进来 Buidl it。
 
 - **目前产品阶段：** 处于完成 Demo 阶段，基于 Web3:// 协议完成开发，巩固 Web3:// 知识，完成 [Web3URL 残酷共学](https://github.com/IntensiveCoLearning/Web3-URL)作业，希望能取得一个好成绩。
 - **未来：** 希望能有更多人基于产品愿景一起推动完成「**产品的可持续**」建设。
+
+## 
+

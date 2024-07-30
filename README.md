@@ -17,11 +17,13 @@
 
 ## 产品团队
 
-发起人：[Oscar](https://github.com/luffythink) 主产品设计、[Derick](https://github.com/DerickIT) 主智能合约设计、[Cora](https://github.com/CHENFANGC) 主前端
+发起者：[Oscar](https://github.com/luffythink) 主产品设计、[Derick](https://github.com/DerickIT) 主智能合约设计、[Cora](https://github.com/CHENFANGC) 主前端
 
 
 
-![web3sounds](img/web3sounds.jpeg)
+![Web3Sounds](img/Web3Sounds_draft.png)
+
+
 
 ## 产品进度
 

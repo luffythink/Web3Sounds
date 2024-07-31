@@ -1,0 +1,26 @@
+<svg width="200" height="100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="none" />
+
+  <!-- W shaped as a wave -->
+  <path d="M10 70 Q 20 10, 30 70 T 50 70" stroke="green" stroke-width="5" fill="none" />
+
+  <!-- E and B as music notes -->
+  <g transform="translate(50, 20)">
+    <path d="M10 50 Q 15 30, 20 50 Q 25 30, 30 50" stroke="green" stroke-width="5" fill="none" />
+    <circle cx="15" cy="50" r="5" fill="black" />
+    <circle cx="25" cy="50" r="5" fill="black" />
+  </g>
+
+  <!-- Spiral O in Sound -->
+  <g transform="translate(110, 20)">
+    <text x="0" y="60" font-family="Verdana" font-size="35" fill="green">S</text>
+    <path d="M40 60 Q 40 40, 60 60 Q 60 40, 80 60" stroke="green" stroke-width="5" fill="none" />
+    <text x="90" y="60" font-family="Verdana" font-size="35" fill="green">d</text>
+    <text x="120" y="60" font-family="Verdana" font-size="35" fill="green">n</text>
+  </g>
+  <path d="M80 50 A10 10 0 0 1 80 70 A10 10 0 0 1 80 50" stroke="black" stroke-width="1" fill="none" />
+
+  <!-- Spiral for O -->
+  <circle cx="80" cy="60" r="5" fill="black" />
+</svg>

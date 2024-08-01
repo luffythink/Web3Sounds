@@ -9,11 +9,15 @@ contract DeployFileStorage is Script {
         // 获取部署者的私钥
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         
+        // 获取部署者的地址
+        address deployerAddress = vm.addr(deployerPrivateKey);
+
         // 开始广播交易
         vm.startBroadcast(deployerPrivateKey);
 
         // 部署 FileStorage 合约
-        FileStorage fileStorage = new FileStorage(address(this));
+        // FileStorage fileStorage = new FileStorage(address(this));
+        FileStorage fileStorage = new FileStorage(deployerAddress);
 
         // 可以在这里添加一些初始化操作，比如：
         // fileStorage.transferOwnership(newOwnerAddress);
@@ -23,5 +27,6 @@ contract DeployFileStorage is Script {
 
         // 输出部署的合约地址
         console.log("FileStorage deployed at:", address(fileStorage));
+        console.log("Deployed By:",deployerAddress);
     }
 }

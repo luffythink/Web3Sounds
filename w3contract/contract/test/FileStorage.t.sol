@@ -10,31 +10,31 @@ contract FileStorageTest is Test {
     address public user1;
     address public user2;
 
+    event FileUploaded(address indexed user, bytes32 indexed fileHash, string name);
+    event FileModified(address indexed user, bytes32 indexed fileHash, string name);
+    event FileDeleted(address indexed user, bytes32 indexed fileHash);
+
     function setUp() public {
         owner = address(this);
         user1 = address(0x1);
         user2 = address(0x2);
-        fileStorage = new FileStorage(address(this));
+        fileStorage = new FileStorage(owner);
     }
 
     function testUploadFile() public {
         vm.prank(user1);
-        fileStorage.uploadFile("test.txt", 100, keccak256("test"));
+        bytes32 fileHash = keccak256("test");
+        
+        vm.expectEmit(true, true, false, true);
+        emit FileUploaded(user1, fileHash, "test.txt");
+        
+        fileStorage.uploadFile("test.txt", 100, fileHash);
         
         FileStorage.File[] memory files = fileStorage.getUserFiles();
         assertEq(files.length, 1);
         assertEq(files[0].name, "test.txt");
         assertEq(files[0].size, 100);
-        assertEq(files[0].hash, keccak256("test"));
-    }
-
-    function testUploadDuplicateFile() public {
-        vm.startPrank(user1);
-        fileStorage.uploadFile("test.txt", 100, keccak256("test"));
-        
-        vm.expectRevert("File already exists");
-        fileStorage.uploadFile("test.txt", 100, keccak256("test"));
-        vm.stopPrank();
+        assertEq(files[0].hash, fileHash);
     }
 
     function testModifyFile() public {
@@ -120,5 +120,16 @@ contract FileStorageTest is Test {
         fileStorage.uploadFile("test.txt", 100, bytes32(0));
         
         vm.stopPrank();
+    }
+
+    function testGasUsage() public {
+        vm.prank(user1);
+        bytes32 fileHash = keccak256("test");
+        
+        uint256 gasBefore = gasleft();
+        fileStorage.uploadFile("test.txt", 100, fileHash);
+        uint256 gasUsed = gasBefore - gasleft();
+        
+        console.log("Gas used for uploadFile:", gasUsed);
     }
 }

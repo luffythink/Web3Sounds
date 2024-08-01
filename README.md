@@ -4,9 +4,7 @@
 
 ## 产品简介
 
-**名字：** Web3Sounds
-
-根据谐音预取中文名：微波山之声🤔
+**名字：** Web3Sounds 微波山之声
 
 **Web3Sounds 希望是一个 public goods ，开源公开，永久记录声音的工具。**
 

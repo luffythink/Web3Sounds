@@ -1,26 +1,9 @@
-<svg width="200" height="100" xmlns="http://www.w3.org/2000/svg">
-  <!-- Background -->
-  <rect width="100%" height="100%" fill="none" />
-
-  <!-- W shaped as a wave -->
-  <path d="M10 70 Q 20 10, 30 70 T 50 70" stroke="green" stroke-width="5" fill="none" />
-
-  <!-- E and B as music notes -->
-  <g transform="translate(50, 20)">
-    <path d="M10 50 Q 15 30, 20 50 Q 25 30, 30 50" stroke="green" stroke-width="5" fill="none" />
-    <circle cx="15" cy="50" r="5" fill="black" />
-    <circle cx="25" cy="50" r="5" fill="black" />
-  </g>
-
-  <!-- Spiral O in Sound -->
-  <g transform="translate(110, 20)">
-    <text x="0" y="60" font-family="Verdana" font-size="35" fill="green">S</text>
-    <path d="M40 60 Q 40 40, 60 60 Q 60 40, 80 60" stroke="green" stroke-width="5" fill="none" />
-    <text x="90" y="60" font-family="Verdana" font-size="35" fill="green">d</text>
-    <text x="120" y="60" font-family="Verdana" font-size="35" fill="green">n</text>
-  </g>
-  <path d="M80 50 A10 10 0 0 1 80 70 A10 10 0 0 1 80 50" stroke="black" stroke-width="1" fill="none" />
-
-  <!-- Spiral for O -->
-  <circle cx="80" cy="60" r="5" fill="black" />
+<svg t="1722475141381" class="icon" viewBox="0 0 1224 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" p-id="3831" width="48" height="48">
+  <path
+    d="M657.38638 430.059755h519.241845a45.152085 45.152085 0 1 0 0-90.304171H657.38638a45.152085 45.152085 0 0 0 0 90.304171z m521.261114 203.181325H657.38638a45.152085 45.152085 0 1 0 0 90.302131h521.261114a45.152085 45.152085 0 1 0 0-90.302131z m0 293.483456H657.38638a45.152085 45.152085 0 0 0 0 90.302132h521.261114a45.152085 45.152085 0 1 0 0-90.302132z"
+    fill="#59ce83" p-id="3832"></path>
+  <path
+    d="M669.597861 160.218066a576.554418 576.554418 0 0 0-224.40405-157.127707 45.017468 45.017468 0 0 0-61.406184 41.990603v556.041498a236.805219 236.805219 0 1 0 90.304171 185.799292c0-2.482273-0.226403-4.966587-0.450766-7.44886 0-1.354338 0.450766-2.484313 0.450766-3.838652V116.193916a490.93536 490.93536 0 0 1 127.778954 103.396787 45.035825 45.035825 0 0 0 67.727109-59.374676z m-432.549922 773.441335a146.741728 146.741728 0 1 1 146.739688-146.741729 147.029321 147.029321 0 0 1-146.739688 146.743768z"
+    fill="#59ce83" p-id="3833"></path>
 </svg>

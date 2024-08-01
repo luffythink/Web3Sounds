@@ -1,0 +1,16 @@
+.next
+.swc
+.turbo
+.cache
+.build
+.DS_Store
+patches
+node_modules
+public/assets
+pnpm-lock.yaml
+!.vscode
+!scripts
+!.*.js
+!.*.cjs
+!.*.mjs
+!.*.ts

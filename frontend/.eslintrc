@@ -1,0 +1,134 @@
+{
+  "root": true,
+  "env": {
+    "node": true,
+    "es2022": true,
+    "browser": true
+  },
+  "extends": ["next", "next/core-web-vitals", "plugin:jsx-a11y/recommended", "prettier"],
+  "plugins": [
+    "@typescript-eslint",
+    "import",
+    "unused-imports",
+    "sort-keys-fix",
+    "sort-destructure-keys",
+    "react",
+    "jsx-a11y",
+    "prettier"
+  ],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": "latest",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/resolver": {
+      "node": true,
+      "typescript": true
+    }
+  },
+  "rules": {
+    "no-console": "warn",
+    "prettier/prettier": "error",
+    "import/no-duplicates": "error",
+    "sort-keys-fix/sort-keys-fix": "error",
+    "unused-imports/no-unused-imports": "error",
+    "@typescript-eslint/consistent-type-imports": "error",
+    "import/newline-after-import": ["error", { "count": 1 }],
+    "react/jsx-boolean-value": ["error", "never", { "always": ["personal"] }],
+    "react/self-closing-comp": ["error", { "component": true, "html": true }],
+    "react/jsx-no-leaked-render": ["error", { "validStrategies": ["coerce", "ternary"] }],
+    "react/jsx-curly-brace-presence": ["error", { "props": "never", "children": "never" }],
+    "no-unused-vars": "off",
+    "unused-imports/no-unused-vars": [
+      "error",
+      {
+        "args": "after-used",
+        "argsIgnorePattern": "^_",
+        "vars": "all",
+        "varsIgnorePattern": "^_"
+      }
+    ],
+    "padding-line-between-statements": [
+      "error",
+      { "blankLine": "always", "prev": "directive", "next": "*" },
+      { "blankLine": "any", "prev": "directive", "next": "directive" },
+      { "blankLine": "always", "prev": ["const", "let", "var"], "next": "*" },
+      { "blankLine": "any", "prev": ["const", "let", "var"], "next": ["const", "let", "var"] },
+      { "blankLine": "always", "prev": "*", "next": "return" }
+    ],
+    "sort-destructure-keys/sort-destructure-keys": [
+      "error",
+      {
+        "caseSensitive": true
+      }
+    ],
+    "sort-keys": [
+      "error",
+      "asc",
+      {
+        "minKeys": 2,
+        "natural": false,
+        "caseSensitive": true
+      }
+    ],
+    "sort-imports": [
+      "error",
+      {
+        "ignoreCase": false,
+        "ignoreMemberSort": false,
+        "allowSeparatedGroups": true,
+        "ignoreDeclarationSort": true,
+        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
+      }
+    ],
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "type",
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+          "unknown",
+          "object"
+        ],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["type", "react"],
+        "newlines-between": "always",
+        "warnOnUnassignedImports": true,
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
+    "react/jsx-sort-props": [
+      "error",
+      {
+        "locale": "auto",
+        "multiline": "last",
+        "ignoreCase": true,
+        "callbacksLast": true,
+        "shorthandFirst": true,
+        "shorthandLast": false,
+        "reservedFirst": true,
+        "noSortAlphabetically": false
+      }
+    ]
+  }
+}

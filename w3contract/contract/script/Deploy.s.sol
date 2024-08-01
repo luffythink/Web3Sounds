@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.20;
 
 import "forge-std/Script.sol";
 import "../src/FileStorage.sol";
@@ -13,7 +13,7 @@ contract DeployFileStorage is Script {
         vm.startBroadcast(deployerPrivateKey);
 
         // 部署 FileStorage 合约
-        FileStorage fileStorage = new FileStorage();
+        FileStorage fileStorage = new FileStorage(address(this));
 
         // 可以在这里添加一些初始化操作，比如：
         // fileStorage.transferOwnership(newOwnerAddress);

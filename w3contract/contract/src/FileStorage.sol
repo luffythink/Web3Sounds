@@ -1,12 +1,9 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
 
 contract FileStorage is Ownable {
-    using Counters for Counters.Counter;
-
     struct File {
         string name;
         uint256 size;
@@ -17,11 +14,13 @@ contract FileStorage is Ownable {
 
     mapping(address => mapping(bytes32 => File)) private userFiles;
     mapping(address => bytes32[]) private userFileList;
-    Counters.Counter private fileCount;
+    uint256 private fileCount;
 
     event FileUploaded(address indexed user, bytes32 indexed fileHash, string name);
     event FileModified(address indexed user, bytes32 indexed fileHash, string name);
     event FileDeleted(address indexed user, bytes32 indexed fileHash);
+
+    constructor(address initialOwner) Ownable(initialOwner) {}
 
     modifier fileExists(bytes32 _hash) {
         require(userFiles[msg.sender][_hash].exists, "File does not exist");
@@ -61,7 +60,7 @@ contract FileStorage is Ownable {
     function deleteFile(bytes32 _hash) external fileExists(_hash) {
         delete userFiles[msg.sender][_hash];
         _removeFileFromList(msg.sender, _hash);
-        fileCount.decrement();
+        fileCount--;
 
         emit FileDeleted(msg.sender, _hash);
     }
@@ -71,8 +70,8 @@ contract FileStorage is Ownable {
     }
 
     function getAllUserFiles() external view onlyOwner returns (address[] memory, File[][] memory) {
-        address[] memory users = new address[](fileCount.current());
-        File[][] memory allFiles = new File[][](fileCount.current());
+        address[] memory users = new address[](fileCount);
+        File[][] memory allFiles = new File[][](fileCount);
         uint256 userCount = 0;
 
         for (uint i = 0; i < users.length; i++) {
@@ -96,15 +95,15 @@ contract FileStorage is Ownable {
     function _addFile(string memory _name, uint256 _size, bytes32 _hash) private {
         userFiles[msg.sender][_hash] = File(_name, _size, _hash, block.timestamp, true);
         userFileList[msg.sender].push(_hash);
-        fileCount.increment();
+        fileCount++;
     }
 
     function _removeFileFromList(address user, bytes32 _hash) private {
-        bytes32[] storage userFiles = userFileList[user];
-        for (uint i = 0; i < userFiles.length; i++) {
-            if (userFiles[i] == _hash) {
-                userFiles[i] = userFiles[userFiles.length - 1];
-                userFiles.pop();
+        bytes32[] storage userFileHashes = userFileList[user];
+        for (uint i = 0; i < userFileHashes.length; i++) {
+            if (userFileHashes[i] == _hash) {
+                userFileHashes[i] = userFileHashes[userFileHashes.length - 1];
+                userFileHashes.pop();
                 break;
             }
         }

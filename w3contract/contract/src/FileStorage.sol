@@ -15,6 +15,7 @@ contract FileStorage is Ownable {
 
     mapping(bytes32 => File) private files;
     mapping(address => bytes32[]) private userFileList;
+    bytes32[] private allFileHashes;
     uint256 private fileCount;
 
     event FileUploaded(
@@ -71,6 +72,7 @@ contract FileStorage is Ownable {
             true
         );
         userFileList[msg.sender].push(_hash);
+        allFileHashes.push(_hash);
         fileCount++;
 
         emit FileUploaded(msg.sender, _hash, _name);
@@ -97,9 +99,9 @@ contract FileStorage is Ownable {
     function deleteFile(
         bytes32 _hash
     ) external fileExists(_hash) onlyUploader(_hash) {
-        address uploader = files[_hash].uploader;
         delete files[_hash];
-        _removeFileFromList(uploader, _hash);
+        _removeFileFromList(msg.sender, _hash);
+        _removeFileFromAllHashes(_hash);
         fileCount--;
 
         emit FileDeleted(msg.sender, _hash);
@@ -111,21 +113,12 @@ contract FileStorage is Ownable {
 
     function getAllUserFiles() external view onlyOwner returns (File[] memory) {
         File[] memory allFiles = new File[](fileCount);
-        uint256 index = 0;
-
-        for (uint256 i = 0; i < fileCount; i++) {
-            bytes32 hash = userFileList[msg.sender][i];
-            if (files[hash].exists) {
-                allFiles[index] = files[hash];
-                index++;
+        for (uint256 i = 0; i < allFileHashes.length; i++) {
+            bytes32 fileHash = allFileHashes[i];
+            if (files[fileHash].exists) {
+                allFiles[i] = files[fileHash];
             }
         }
-
-        // Resize the array to remove any empty slots
-        assembly {
-            mstore(allFiles, index)
-        }
-
         return allFiles;
     }
 
@@ -135,6 +128,16 @@ contract FileStorage is Ownable {
             if (userFiles[i] == _hash) {
                 userFiles[i] = userFiles[userFiles.length - 1];
                 userFiles.pop();
+                break;
+            }
+        }
+    }
+
+    function _removeFileFromAllHashes(bytes32 _hash) private {
+        for (uint i = 0; i < allFileHashes.length; i++) {
+            if (allFileHashes[i] == _hash) {
+                allFileHashes[i] = allFileHashes[allFileHashes.length - 1];
+                allFileHashes.pop();
                 break;
             }
         }

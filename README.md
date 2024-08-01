@@ -21,7 +21,7 @@
 
 
 
-![Web3Sounds](img/Web3Sounds_draft.png)
+![Web3Sounds](img/Web3Sounds_draft2.png)
 
 
 
@@ -35,6 +35,7 @@
 - 智能合约设计：已完成部分 [这里](https://candied-ocean-12a.notion.site/web3-audio-app-220f6e41181f4d5ea94a8dafb8ac2dab)
 - 根据 UI 实现前端逻辑
 - 完成初步 Demo
+
 
 ## 产品功能框架
 

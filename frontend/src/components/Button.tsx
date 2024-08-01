@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import clsx from 'clsx';
+import Link from 'next/link';
 
 const variantStyles = {
   primary:
@@ -15,7 +15,7 @@ type ButtonProps = {
   | React.ComponentPropsWithoutRef<typeof Link>
 );
 
-export function Button({ variant = 'primary', className, ...props }: ButtonProps) {
+export function Button({ className, variant = 'primary', ...props }: ButtonProps) {
   className = clsx(
     'inline-flex items-center gap-2 justify-center rounded-md py-2 px-3 text-sm outline-offset-2 transition active:transition-none',
     variantStyles[variant],

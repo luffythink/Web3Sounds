@@ -9,13 +9,13 @@ contract FileStorage is Ownable {
         uint256 size;
         bytes32 hash;
         uint256 uploadTime;
+        address uploader;
         bool exists;
     }
 
-    mapping(address => mapping(bytes32 => File)) private userFiles;
+    mapping(bytes32 => File) private files;
     mapping(address => bytes32[]) private userFileList;
     uint256 private fileCount;
-    address[] private userAddresses; // 新增：用于存储所有上传过文件的用户地址
 
     event FileUploaded(
         address indexed user,
@@ -32,7 +32,15 @@ contract FileStorage is Ownable {
     constructor(address initialOwner) Ownable(initialOwner) {}
 
     modifier fileExists(bytes32 _hash) {
-        require(userFiles[msg.sender][_hash].exists, "File does not exist");
+        require(files[_hash].exists, "File does not exist");
+        _;
+    }
+
+    modifier onlyUploader(bytes32 _hash) {
+        require(
+            files[_hash].uploader == msg.sender,
+            "Only uploader can modify or delete the file"
+        );
         _;
     }
 
@@ -52,13 +60,19 @@ contract FileStorage is Ownable {
         uint256 _size,
         bytes32 _hash
     ) external validFileData(_name, _size, _hash) {
-        require(!userFiles[msg.sender][_hash].exists, "File already exists");
+        require(!files[_hash].exists, "File already exists");
 
-        if (userFileList[msg.sender].length == 0) {
-            userAddresses.push(msg.sender); // 新增：如果是用户的第一个文件，添加用户地址
-        }
+        files[_hash] = File(
+            _name,
+            _size,
+            _hash,
+            block.timestamp,
+            msg.sender,
+            true
+        );
+        userFileList[msg.sender].push(_hash);
+        fileCount++;
 
-        _addFile(_name, _size, _hash);
         emit FileUploaded(msg.sender, _hash, _name);
     }
 
@@ -66,8 +80,13 @@ contract FileStorage is Ownable {
         bytes32 _hash,
         string memory _newName,
         uint256 _newSize
-    ) external fileExists(_hash) validFileData(_newName, _newSize, _hash) {
-        File storage file = userFiles[msg.sender][_hash];
+    )
+        external
+        fileExists(_hash)
+        onlyUploader(_hash)
+        validFileData(_newName, _newSize, _hash)
+    {
+        File storage file = files[_hash];
         file.name = _newName;
         file.size = _newSize;
         file.uploadTime = block.timestamp;
@@ -75,21 +94,13 @@ contract FileStorage is Ownable {
         emit FileModified(msg.sender, _hash, _newName);
     }
 
-    function deleteFile(bytes32 _hash) external fileExists(_hash) {
-        delete userFiles[msg.sender][_hash];
-        _removeFileFromList(msg.sender, _hash);
+    function deleteFile(
+        bytes32 _hash
+    ) external fileExists(_hash) onlyUploader(_hash) {
+        address uploader = files[_hash].uploader;
+        delete files[_hash];
+        _removeFileFromList(uploader, _hash);
         fileCount--;
-
-        if (userFileList[msg.sender].length == 0) {
-            // 如果用户删除了所有文件，从 userAddresses 中移除该用户
-            for (uint i = 0; i < userAddresses.length; i++) {
-                if (userAddresses[i] == msg.sender) {
-                    userAddresses[i] = userAddresses[userAddresses.length - 1];
-                    userAddresses.pop();
-                    break;
-                }
-            }
-        }
 
         emit FileDeleted(msg.sender, _hash);
     }
@@ -98,44 +109,32 @@ contract FileStorage is Ownable {
         return _getFiles(msg.sender);
     }
 
-    function getAllUserFiles()
-        external
-        view
-        onlyOwner
-        returns (address[] memory, File[][] memory)
-    {
-        uint256 userCount = userAddresses.length;
-        File[][] memory allFiles = new File[][](userCount);
+    function getAllUserFiles() external view onlyOwner returns (File[] memory) {
+        File[] memory allFiles = new File[](fileCount);
+        uint256 index = 0;
 
-        for (uint i = 0; i < userCount; i++) {
-            allFiles[i] = _getFiles(userAddresses[i]);
+        for (uint256 i = 0; i < fileCount; i++) {
+            bytes32 hash = userFileList[msg.sender][i];
+            if (files[hash].exists) {
+                allFiles[index] = files[hash];
+                index++;
+            }
         }
 
-        return (userAddresses, allFiles);
-    }
+        // Resize the array to remove any empty slots
+        assembly {
+            mstore(allFiles, index)
+        }
 
-    function _addFile(
-        string memory _name,
-        uint256 _size,
-        bytes32 _hash
-    ) private {
-        userFiles[msg.sender][_hash] = File(
-            _name,
-            _size,
-            _hash,
-            block.timestamp,
-            true
-        );
-        userFileList[msg.sender].push(_hash);
-        fileCount++;
+        return allFiles;
     }
 
     function _removeFileFromList(address user, bytes32 _hash) private {
-        bytes32[] storage userFileHashes = userFileList[user];
-        for (uint i = 0; i < userFileHashes.length; i++) {
-            if (userFileHashes[i] == _hash) {
-                userFileHashes[i] = userFileHashes[userFileHashes.length - 1];
-                userFileHashes.pop();
+        bytes32[] storage userFiles = userFileList[user];
+        for (uint i = 0; i < userFiles.length; i++) {
+            if (userFiles[i] == _hash) {
+                userFiles[i] = userFiles[userFiles.length - 1];
+                userFiles.pop();
                 break;
             }
         }
@@ -143,12 +142,21 @@ contract FileStorage is Ownable {
 
     function _getFiles(address user) private view returns (File[] memory) {
         bytes32[] memory hashes = userFileList[user];
-        File[] memory files = new File[](hashes.length);
+        File[] memory userFiles = new File[](hashes.length);
+        uint256 validFileCount = 0;
 
         for (uint i = 0; i < hashes.length; i++) {
-            files[i] = userFiles[user][hashes[i]];
+            if (files[hashes[i]].exists) {
+                userFiles[validFileCount] = files[hashes[i]];
+                validFileCount++;
+            }
         }
 
-        return files;
+        // Resize the array to remove any empty slots
+        assembly {
+            mstore(userFiles, validFileCount)
+        }
+
+        return userFiles;
     }
 }

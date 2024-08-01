@@ -1,79 +1,66 @@
-以下是针对 FileStorage 合约的所有函数的详细 `cast` 调用命令：
+当然，我很乐意为您提供一系列的 cast 命令来测试修改后的 FileStorage 合约。这些命令将覆盖合约的主要功能。请确保在运行这些命令之前，您已经部署了合约并设置了必要的环境变量。
 
-1. 上传文件 (uploadFile):
+假设您已经设置了以下环境变量：
+- `$CONTRACT_ADDRESS`: 部署的合约地址
+- `$OWNER_ADDRESS`: 合约所有者的地址
+- `$ADDRESS`: 测试用户1的地址
+- `$ADDRESS2`: 测试用户2的地址
+- `$OWNER_PRIVATE_KEY`: 合约所有者的私钥
+- `$PRIVATE_KEY`: 测试用户1的私钥
+- `$PRIVATE_KEY2`: 测试用户2的私钥
+
+以下是测试命令：
+
+1. 上传文件（用户1）：
 ```bash
-cast send $CONTRACT_ADDRESS "uploadFile(string,uint256,bytes32)" "test.txt" 1024 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef --from $ADDRESS --private-key $PRIVATE_KEY
-
-blockHash               0x9caeee8a4af356837af51b197564db542caf7718750ffde6bbc90cca0c091ae5
-blockNumber             2
-contractAddress         
-cumulativeGasUsed       203765
-effectiveGasPrice       883817335
-from                    0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
-gasUsed                 203765
-logs                    [{"address":"0x5fbdb2315678afecb367f032d93f642f64180aa3","topics":["0xd404a946e4879a6393311b452f8f3945c811eca1ce782109276b7487f148c5aa","0x000000000000000000000000f39fd6e51aad88f6f4ce6ab8827279cfffb92266","0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"],"data":"0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000008746573742e747874000000000000000000000000000000000000000000000000","blockHash":"0x9caeee8a4af356837af51b197564db542caf7718750ffde6bbc90cca0c091ae5","blockNumber":"0x2","blockTimestamp":"0x66ab638d","transactionHash":"0xfd2045bc173d42dee2df263daa24ad14208d19e9aea6c39e000dea8a128fc68b","transactionIndex":"0x0","logIndex":"0x0","removed":false}]
-logsBloom               0x00000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000000000000000040000000000000000100000000000000000000000000040000000001000000000000000000000000000000000000000000000000000000000200000000000000080000000000000000000000000000040000000000000000000000000000000040000000200000000000000000000000002000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-root                    0x68e88719c1d1f54e5a833b175d860ba70f16e39e9085a223aa2d2cece354b742
-status                  1 (success)
-transactionHash         0xfd2045bc173d42dee2df263daa24ad14208d19e9aea6c39e000dea8a128fc68b
-transactionIndex        0
-type                    2
-blobGasPrice            1
-blobGasUsed             
-authorizationList       
-to                      0x5FbDB2315678afecb367f032d93F642f64180aa3
+cast send $CONTRACT_ADDRESS "uploadFile(string,uint256,bytes32)" "test1.txt" 1024 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef --from $ADDRESS --private-key $PRIVATE_KEY
 ```
 
-2. 修改文件 (modifyFile):
+2. 上传另一个文件（用户2）：
 ```bash
-cast send $CONTRACT_ADDRESS "modifyFile(bytes32,string,uint256)" 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef "updated_test.txt" 2048 --from $ADDRESS --private-key $PRIVATE_KEY
+cast send $CONTRACT_ADDRESS "uploadFile(string,uint256,bytes32)" "test2.txt" 2048 0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890 --from $ADDRESS2 --private-key $PRIVATE_KEY2
 ```
 
-3. 删除文件 (deleteFile):
-```bash
-cast send $CONTRACT_ADDRESS "deleteFile(bytes32)" 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef --from $ADDRESS --private-key $PRIVATE_KEY
-```
-
-4. 获取用户文件 (getUserFiles):
+3. 获取用户1的文件：
 ```bash
 cast call $CONTRACT_ADDRESS "getUserFiles()" --from $ADDRESS
 ```
 
-5. 获取所有用户文件 (getAllUserFiles) - 仅合约所有者可调用:
+4. 获取用户2的文件：
+```bash
+cast call $CONTRACT_ADDRESS "getUserFiles()" --from $ADDRESS2
+```
+
+5. 修改文件（用户1）：
+```bash
+cast send $CONTRACT_ADDRESS "modifyFile(bytes32,string,uint256)" 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef "updated_test1.txt" 1500 --from $ADDRESS --private-key $PRIVATE_KEY
+```
+
+6. 尝试修改不属于自己的文件（用户2尝试修改用户1的文件，应该失败）：
+```bash
+cast send $CONTRACT_ADDRESS "modifyFile(bytes32,string,uint256)" 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef "hacked.txt" 1000 --from $ADDRESS2 --private-key $PRIVATE_KEY2
+```
+
+7. 删除文件（用户1）：
+```bash
+cast send $CONTRACT_ADDRESS "deleteFile(bytes32)" 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef --from $ADDRESS --private-key $PRIVATE_KEY
+```
+
+8. 尝试删除不存在的文件（应该失败）：
+```bash
+cast send $CONTRACT_ADDRESS "deleteFile(bytes32)" 0x0000000000000000000000000000000000000000000000000000000000000000 --from $ADDRESS --private-key $PRIVATE_KEY
+```
+
+9. 获取所有用户的所有文件（只有合约所有者可以调用）：
+```bash
+cast call $CONTRACT_ADDRESS "getAllUserFiles()" --from $OWNER_ADDRESS
+```
+
+10. 尝试以非所有者身份获取所有文件（应该失败）：
 ```bash
 cast call $CONTRACT_ADDRESS "getAllUserFiles()" --from $ADDRESS
 ```
 
-6. 查询合约所有者 (owner):
-```bash
-cast call $CONTRACT_ADDRESS "owner()"
-```
+这些命令将帮助您测试合约的主要功能，包括上传、修改、删除文件，以及获取用户文件和所有文件。请注意，某些命令预期会失败（如非所有者调用 getAllUserFiles 或修改/删除不属于自己的文件），这是为了测试合约的权限控制。
 
-7. 转移所有权 (transferOwnership) - 仅当前所有者可调用:
-```bash
-cast send $CONTRACT_ADDRESS "transferOwnership(address)" <NEW_OWNER_ADDRESS> --from $ADDRESS --private-key $PRIVATE_KEY
-```
-
-8. 放弃所有权 (renounceOwnership) - 仅当前所有者可调用:
-```bash
-cast send $CONTRACT_ADDRESS "renounceOwnership()" --from $ADDRESS --private-key $PRIVATE_KEY
-```
-
-注意事项：
-
-1. 对于 `bytes32` 类型的参数（如文件哈希），确保使用 32 字节的十六进制字符串。
-
-2. 对于 `send` 交易，你可能需要等待几秒钟让交易被确认，然后才能查询结果。
-
-3. 对于 `call` 查询，结果会直接返回。
-
-4. 如果你想查看更详细的交易信息，可以在命令后添加 `--json` 参数。
-
-5. 如果你想指定 gas 限制或 gas 价格，可以使用 `--gas-limit` 和 `--gas-price` 参数。
-
-6. 对于 Anvil，你可能不需要指定 `--private-key`，因为它默认使用预定义的账户。
-
-7. 如果你想监听事件，可以使用 `cast logs` 命令。例如：
-   ```bash
-   cast logs $CONTRACT_ADDRESS "FileUploaded(address,bytes32,string)" --from-block 0
-   ```
+在运行这些命令时，请确保您连接到了正确的网络（如果是在测试网络上），并且账户中有足够的 ETH 来支付 gas 费用。如果遇到任何问题，请随时告诉我，我会很乐意帮助您解决。

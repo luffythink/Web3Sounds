@@ -19,7 +19,7 @@
 
 
 
-![Web3Sounds](img/Web3Sounds_draft3.png)
+![Web3Sounds](img/Web3S_draft3.png)
 
 
 

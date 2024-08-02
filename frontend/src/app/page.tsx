@@ -1,14 +1,13 @@
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Image from 'next/image';
-
-import { Button } from '@/components/Button';
 
 export default function Home() {
   return (
     <main className="flex min-h-screen w-full flex-col items-center justify-between">
       <div className="w-full flex-grow bg-white">
         <div className="flex justify-between px-20 py-10">
-          <Image alt="logo" height={24} src="/images/logo.svg" width={24} />
-          <Button className="bg-white">链接钱包</Button>
+          <Image alt="logo" height={40} src="/images/logo.svg" width={40} />
+          <ConnectButton />
         </div>
         <div className="align-center flex justify-center text-3xl">
           <h1 className="text-purple-400">永久记录每一个人的声音</h1>

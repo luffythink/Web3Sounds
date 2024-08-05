@@ -1,4 +1,8 @@
-当然，我很乐意为您提供一系列的 cast 命令来测试修改后的 FileStorage 合约。这些命令将覆盖合约的主要功能。请确保在运行这些命令之前，您已经部署了合约并设置了必要的环境变量。
+```
+forge install OpenZeppelin/openzeppelin-contracts --no-commit
+forge install OpenZeppelin/openzeppelin-contracts-upgradeable --no-commit
+
+```
 
 假设您已经设置了以下环境变量：
 - `$CONTRACT_ADDRESS`: 部署的合约地址

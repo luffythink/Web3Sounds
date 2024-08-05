@@ -14,6 +14,13 @@ forge install OpenZeppelin/openzeppelin-contracts-upgradeable --no-commit
 - `$PRIVATE_KEY2`: 测试用户2的私钥
 
 以下是测试命令：
+0. 如果实现了代理合约升级
+```bash
+- 合约初始化
+cast send $CONTRACT_ADDRESS "initialize(address)" $OWNER_ADDRESS --private-key $PRIVATE_KEY
+- 升级新合约
+cast send $PROXY_ADDRESS "upgradeTo(address)" $NEW_IMPLEMENTATION_ADDRESS --private-key $OWNER_PRIVATE_KEY
+```
 
 1. 上传文件（用户1）：
 ```bash

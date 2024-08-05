@@ -1,9 +1,17 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
+// import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
-contract FileStorage is Ownable {
+
+// import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+// import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+// import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
+
+contract FileStorage is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     struct File {
         string name;
         uint256 size;
@@ -18,6 +26,18 @@ contract FileStorage is Ownable {
     bytes32[] private allFileHashes;
     uint256 private fileCount;
 
+
+    /// @custom:oz-upgrades-unsafe-allow constructor
+    constructor() {
+        _disableInitializers();
+    }
+
+    function initialize(address initialOwner) public initializer {
+        __Ownable_init(initialOwner);
+        __UUPSUpgradeable_init();
+    }
+    function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
+
     event FileUploaded(
         address indexed user,
         bytes32 indexed fileHash,
@@ -30,7 +50,7 @@ contract FileStorage is Ownable {
     );
     event FileDeleted(address indexed user, bytes32 indexed fileHash);
 
-    constructor(address initialOwner) Ownable(initialOwner) {}
+    // constructor(address initialOwner) __Ownable_init(initialOwner) {}
 
     modifier fileExists(bytes32 _hash) {
         require(files[_hash].exists, "File does not exist");

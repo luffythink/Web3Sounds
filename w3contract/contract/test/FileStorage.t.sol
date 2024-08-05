@@ -10,11 +10,19 @@ contract FileStorageTest is Test {
     address public user1;
     address public user2;
 
+    // function setUp() public {
+    //     owner = address(this);
+    //     user1 = address(0x1);
+    //     user2 = address(0x2);
+    //     fileStorage = new FileStorage(owner);
+    // }
+
     function setUp() public {
         owner = address(this);
         user1 = address(0x1);
         user2 = address(0x2);
-        fileStorage = new FileStorage(owner);
+        fileStorage = new FileStorage();
+        fileStorage.initialize(owner);
     }
 
     function testUploadFile() public {

@@ -17,14 +17,14 @@ forge install OpenZeppelin/openzeppelin-contracts-upgradeable --no-commit
 0. 如果实现了代理合约升级
 ```bash
 - 合约初始化
-cast send $CONTRACT_ADDRESS "initialize(address)" $OWNER_ADDRESS --private-key $PRIVATE_KEY
+cast send $CONTRACT_ADDRESS "initialize(address)" $OWNER_ADDRESS --private-key $OWNER_PRIVATE_KEY  --rpc-url $RPC_URL  --chain $CHAIN_ID
 - 升级新合约
 cast send $PROXY_ADDRESS "upgradeTo(address)" $NEW_IMPLEMENTATION_ADDRESS --private-key $OWNER_PRIVATE_KEY
 ```
 
 1. 上传文件（用户1）：
 ```bash
-cast send $CONTRACT_ADDRESS "uploadFile(string,uint256,bytes32)" "test1.txt" 1024 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef --from $ADDRESS --private-key $PRIVATE_KEY
+cast send $PROXY_ADDRESS "uploadFile(string,uint256,bytes32)" "test1.txt" 1024 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef --from $OWNER_ADDRESS --private-key $OWNER_PRIVATE_KEY  --rpc-url $RPC_URL  --chain $CHAIN_ID
 ```
 
 2. 上传另一个文件（用户2）：
@@ -34,7 +34,7 @@ cast send $CONTRACT_ADDRESS "uploadFile(string,uint256,bytes32)" "test2.txt" 204
 
 3. 获取用户1的文件：
 ```bash
-cast call $CONTRACT_ADDRESS "getUserFiles()" --from $ADDRESS
+cast call $PROXY_ADDRESS "getUserFiles()" --from $OWNER_ADDRESS --rpc-url $RPC_URL  --chain $CHAIN_ID
 ```
 
 4. 获取用户2的文件：

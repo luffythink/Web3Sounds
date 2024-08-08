@@ -72,6 +72,11 @@ cast call $CONTRACT_ADDRESS "getAllUserFiles()" --from $OWNER_ADDRESS
 cast call $CONTRACT_ADDRESS "getAllUserFiles()" --from $ADDRESS
 ```
 
+11. 为前端生成abi文件
+```bash
+jq .abi out/FileStorage.sol/FileStorage.json > abi.json
+```
+
 这些命令将帮助您测试合约的主要功能，包括上传、修改、删除文件，以及获取用户文件和所有文件。请注意，某些命令预期会失败（如非所有者调用 getAllUserFiles 或修改/删除不属于自己的文件），这是为了测试合约的权限控制。
 
 在运行这些命令时，请确保您连接到了正确的网络（如果是在测试网络上），并且账户中有足够的 ETH 来支付 gas 费用。如果遇到任何问题，请随时告诉我，我会很乐意帮助您解决。

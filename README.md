@@ -43,6 +43,8 @@
 
 ## 共创团队
 
+基于 LXDAO X EthStorage Web3URL 残酷共学 1st
+
 **发起者：**[Oscar](https://github.com/luffythink) 主产品设计、[Derick](https://github.com/DerickIT) 主智能合约设计、[Cora](https://github.com/CHENFANGC) 主前端 
 
 **Demo 链接：**

@@ -47,10 +47,10 @@
 
 **Demo 链接：**
 
-**产品共创文档**：
+**产品共创记录**：
 
-- 产品进度对齐、产品会议纪要
-- Demo用户旅程
+- [产品进度及共创记录](https://github.com/luffythink/Web3Sounds/blob/main/w3doc/%E4%BA%A7%E5%93%81%E5%85%B1%E5%88%9B%E8%AE%B0%E5%BD%95.md)
+- [用户旅程](https://github.com/luffythink/Web3Sounds/blob/main/w3doc/User_journey.md)
 
 ## 未来计划
 

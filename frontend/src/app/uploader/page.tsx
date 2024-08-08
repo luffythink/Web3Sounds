@@ -33,7 +33,7 @@ export default function UploaderPage() {
 
   // callback, can be null
   const onProgress = (chunkIndex: number, totalChunk: number, fileName: string): void => {
-    console.log('progress');
+    console.log('progress', chunkIndex, totalChunk, fileName);
   };
 
   const onSuccess = (fileName: string): void => {

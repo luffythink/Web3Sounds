@@ -2,8 +2,8 @@
 
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Image from 'next/image';
-import CustomGrid from '@/components/CustomGrid';
 
+import CustomGrid from '@/components/CustomGrid';
 import { Wave } from '@/components/Wave';
 
 export default function Home() {

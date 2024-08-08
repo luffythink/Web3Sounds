@@ -43,9 +43,12 @@
 
 ## 共创团队
 
-**发起者：**[Oscar](https://github.com/luffythink) 主产品设计、[Derick](https://github.com/DerickIT) 主智能合约设计、[Cora](https://github.com/CHENFANGC) 主前端
+**发起者：**[Oscar](https://github.com/luffythink) 主产品设计、[Derick](https://github.com/DerickIT) 主智能合约设计、[Cora](https://github.com/CHENFANGC) 主前端 
+
+**Demo 链接：**
 
 **产品共创文档**：
+
 - 产品进度对齐、产品会议纪要
 - Demo用户旅程
 

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const getRandomDarkGreenColor = (): string => {
   const greenValue = Math.floor(Math.random() * 128) + 128;
   const redBlueValue = Math.floor(Math.random() * 128);
+
   return `rgba(${redBlueValue}, ${greenValue}, ${redBlueValue}, 0.5)`;
 };
 
@@ -10,13 +11,12 @@ const CustomGrid: React.FC = () => {
   const rows = 9;
   const cols = 49;
 
-  const initialGridData: string[][] = Array.from({ length: rows }, () =>
+  const gridData: string[][] = Array.from({ length: rows }, () =>
     Array.from({ length: cols }, () => getRandomDarkGreenColor())
   );
 
-  const [gridData, setGridData] = useState(initialGridData);
+  const mainDeepColor: string = '#1b632e';
 
-  const mainDeepColor = '#1b632e';
   // W
   gridData[2][4] = mainDeepColor;
   gridData[3][4] = mainDeepColor;
@@ -136,8 +136,14 @@ const CustomGrid: React.FC = () => {
   gridData[6][44] = mainDeepColor;
 
   const handleCellClick = (rowIndex: number, colIndex: number) => {
-    // alert(`Clicked cell at row ${rowIndex}, column ${colIndex}`);
+    console.log(`Clicked cell at row ${rowIndex}, column ${colIndex}`);
     alert('声音播放待开发……');
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent, rowIndex: number, colIndex: number) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      handleCellClick(rowIndex, colIndex);
+    }
   };
 
   return (
@@ -151,9 +157,12 @@ const CustomGrid: React.FC = () => {
             <div
               key={`${rowIndex}-${colIndex}`}
               className="h-3 w-3 cursor-pointer rounded-sm"
+              role="button"
               style={{ backgroundColor: color }}
+              tabIndex={0}
               onClick={() => handleCellClick(rowIndex, colIndex)}
-            ></div>
+              onKeyDown={(event) => handleKeyDown(event, rowIndex, colIndex)}
+            />
           ))
         )}
       </div>

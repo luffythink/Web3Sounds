@@ -59,9 +59,9 @@
 - [产品进度及共创记录](https://github.com/luffythink/Web3Sounds/blob/main/w3doc/%E4%BA%A7%E5%93%81%E5%85%B1%E5%88%9B%E8%AE%B0%E5%BD%95.md)
 - [用户旅程](https://github.com/luffythink/Web3Sounds/blob/main/w3doc/User_journey.md)
 
-## 未来计划
+## 共建计划
 
-- **连接更多共创者**：本产品开源开放，每一个认同此产品愿景的小伙伴，都可以加入进来 Buidl it，共同推动 Web3Sounds 的可持续建设。
+- **连接更多共创者推动和支持**：本产品开源开放，每一个认同此产品愿景的小伙伴，都可以加入进来 Buidl it，共同推动 Web3Sounds 的可持续建设。
 - **基于 Web3 URL 友好访问**：未来将继续完善功能，提升用户体验，并探索更多基于声音的连接和互动形式。
 
 

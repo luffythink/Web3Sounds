@@ -75,6 +75,49 @@ cast call $CONTRACT_ADDRESS "getAllUserFiles()" --from $ADDRESS
 11. 为前端生成abi文件
 ```bash
 jq .abi out/FileStorage.sol/FileStorage.json > abi.json
+
+const FileStorageContractInfo = {
+  abi: [
+    "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+    "function deleteFile(bytes32 _hash) nonpayable",
+    "function getAllUserFiles() view returns (tuple(string name, uint256 size, bytes32 hash, uint256 uploadTime, address uploader, bool exists)[])",
+    "function getUserFiles() view returns (tuple(string name, uint256 size, bytes32 hash, uint256 uploadTime, address uploader, bool exists)[])",
+    "function initialize(address initialOwner) nonpayable",
+    "function modifyFile(bytes32 _hash, string _newName, uint256 _newSize) nonpayable",
+    "function owner() view returns (address)",
+    "function proxiableUUID() view returns (bytes32)",
+    "function renounceOwnership() nonpayable",
+    "function transferOwnership(address newOwner) nonpayable",
+    "function upgradeToAndCall(address newImplementation, bytes data) payable",
+    "function uploadFile(string _name, uint256 _size, bytes32 _hash) nonpayable",
+    "event FileDeleted(address indexed user, bytes32 indexed fileHash)",
+    "event FileModified(address indexed user, bytes32 indexed fileHash, string name)",
+    "event FileUploaded(address indexed user, bytes32 indexed fileHash, string name)",
+    "event Initialized(uint64 version)",
+    "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+    "event Upgraded(address indexed implementation)"
+  ]
+};
+```
+
+12. 为后端合约调用生成ABI文件
+```bash
+solc --abi w3contract/contract/src/proxy/FileStorageProxy.sol -o ./
+forge inspect w3contract/contract/src/FileStorage.sol abi > $(OUT_DIR)/FileStorageProxy.abi
+
+solc --abi w3contract/contract/src/proxy/FileStorageProxy.sol -o ./
+
+forge inspect w3contract/contract/src/proxy/FileStorageProxy.sol:FileStorageProxy abi > ./out/FileStorageProxy.abi
+forge inspect w3contract/contract/src/FileStorage.sol:FileStorage abi > ./out/FileStorage.abi
+
+
+forge inspect src/proxy/FileStorageProxy.sol:FileStorageProxy abi > abi/FileStorageProxy.abi
+
+forge inspect src/FileStorage.sol:FileStorage abi > abi/FileStorage.abi
+
+jq -s '.[0] + .[1]' FileStorageProxy.abi FileStorage.abi > CombinedContract.abi
+
+abigen --abi CombinedContract.abi --pkg FileStorage --type FileStorageContract --out filestoragecontract.go
 ```
 
 这些命令将帮助您测试合约的主要功能，包括上传、修改、删除文件，以及获取用户文件和所有文件。请注意，某些命令预期会失败（如非所有者调用 getAllUserFiles 或修改/删除不属于自己的文件），这是为了测试合约的权限控制。

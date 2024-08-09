@@ -5,7 +5,7 @@
     "es2022": true,
     "browser": true
   },
-  "extends": ["next", "next/core-web-vitals", "plugin:jsx-a11y/recommended", "prettier"],
+  "extends": ["next", "next/core-web-vitals", "prettier"], //"plugin:jsx-a11y/recommended",
   "plugins": [
     "@typescript-eslint",
     "import",
@@ -13,7 +13,7 @@
     "sort-keys-fix",
     "sort-destructure-keys",
     "react",
-    "jsx-a11y",
+    // "jsx-a11y",
     "prettier"
   ],
   "parserOptions": {

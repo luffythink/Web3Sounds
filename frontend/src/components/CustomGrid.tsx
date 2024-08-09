@@ -136,7 +136,6 @@ const CustomGrid: React.FC = () => {
   gridData[6][44] = mainDeepColor;
 
   const handleCellClick = (rowIndex: number, colIndex: number) => {
-    console.log(`Clicked cell at row ${rowIndex}, column ${colIndex}`);
     alert('声音播放待开发……');
   };
 

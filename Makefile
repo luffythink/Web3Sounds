@@ -1,8 +1,18 @@
+SHELL := /bin/bash
+.ONESHELL:
+
 -include .env
 export
 
 # 设置工作目录
+
+
 WORKDIR := w3contract/contract
+LOAD_ENV := . .env
+CONTRACT_DIR := w3contract/contract/src
+OUT_DIR := ./out
+GO_OUT_DIR := ./pkg/contracts
+
 
 .PHONY: all test clean deploy fund help install snapshot format anvil 
 
@@ -31,7 +41,10 @@ update:
 	@cd $(WORKDIR) && forge update
 
 build:
-	@cd $(WORKDIR) && forge build
+	@echo "Compiling contracts..."
+	@$(LOAD_ENV) && cd $(WORKDIR) && forge build 
+
+
 
 test:
 	@cd $(WORKDIR) && forge test 
@@ -43,12 +56,19 @@ format:
 	@cd $(WORKDIR) && forge fmt
 
 testecho:
+	@$(LOAD_ENV)
 	@echo "ETHERSCAN_API_KEY: $(ETHERSCAN_API_KEY)"
 	@echo "OWNER_PRIVATE_KEY: $(OWNER_PRIVATE_KEY)"
 	@echo "DEFAULT_ANVIL_KEY: $(DEFAULT_ANVIL_KEY)"
 
 anvil:
 	@anvil -m 'test test test test test test test test test test test junk' --steps-tracing --block-time 1
+
+abi:
+	@echo "Generating ABI files..."
+	@mkdir -p $(OUT_DIR)
+	@forge inspect $(CONTRACT_DIR)/proxy/FileStorageProxy.sol:FileStorageProxy abi > $(OUT_DIR)/FileStorageProxy.abi
+	@forge inspect $(CONTRACT_DIR)/FileStorage.sol:FileStorage abi > $(OUT_DIR)/FileStorage.abi
 
 NETWORK_ARGS := --rpc-url $(RPC_URL) --private-key $(DEFAULT_ANVIL_KEY) --broadcast --gas-price 15000000000 --gas-limit 25718 -vvvv
 
@@ -96,4 +116,4 @@ deploy:
 
 # 更新为你的合约地址
 verify:
-	@cd $(WORKDIR) && forge verify-contract --chain-id 3334 --num-of-optimizations 200 --watch --constructor-args 0x00000000000000000000000000000000000000000000d3c21bcecceda1000000 --etherscan-api-key $(ETHERSCAN_API_KEY) --compiler-version v0.8.19+commit.7dd6d404 0x089dc24123e0a27d44282a1ccc2fd815989e3300 src/FileStorage.sol:FileStorage
+	@cd $(WORKDIR) && forge verify-contract --chain-id $(CHAIN_ID) --num-of-optimizations 200 --watch --constructor-args 0x00000000000000000000000000000000000000000000d3c21bcecceda1000000 --etherscan-api-key $(ETHERSCAN_API_KEY) --compiler-version v0.8.19+commit.7dd6d404 0x089dc24123e0a27d44282a1ccc2fd815989e3300 src/FileStorage.sol:FileStorage

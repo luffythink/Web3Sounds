@@ -38,7 +38,7 @@
     "import/no-duplicates": "error",
     "sort-keys-fix/sort-keys-fix": "error",
     "unused-imports/no-unused-imports": "error",
-    "@typescript-eslint/consistent-type-imports": "error",
+    // "@typescript-eslint/consistent-type-imports": "error",
     "import/newline-after-import": ["error", { "count": 1 }],
     "react/jsx-boolean-value": ["error", "never", { "always": ["personal"] }],
     "react/self-closing-comp": ["error", { "component": true, "html": true }],

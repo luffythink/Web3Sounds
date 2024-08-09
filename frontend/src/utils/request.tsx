@@ -13,6 +13,7 @@ if (typeof window !== 'undefined') {
 const stringToHex = (s: string): string => ethers.hexlify(ethers.toUtf8Bytes(s));
 
 export const FileContract = async (address: string) => {
+  console.log('address', address);
   const provider = new ethers.BrowserProvider(window.ethereum);
   const contract = new ethers.Contract(Espoir.ADDRESS, Espoir.ABI, provider);
 

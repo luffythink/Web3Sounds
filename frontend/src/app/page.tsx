@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 
 import CustomGrid from '@/components/CustomGrid';
 import Header from '@/components/Header';
@@ -30,7 +31,9 @@ export default function Home() {
         </a>
       </div>
       <div className="flex h-40 w-full items-center justify-center bg-green-600 text-white">
-        <Image alt="github" height={24} src="/images/github.svg" width={24} />
+        <Link passHref href="https://github.com/luffythink/Web3Sounds" target="_blank">
+          <Image alt="github" height={24} src="/images/github.svg" width={24} />
+        </Link>
         <div className="ml-4">链接声音，一起探索未来世界计算机</div>
       </div>
     </main>

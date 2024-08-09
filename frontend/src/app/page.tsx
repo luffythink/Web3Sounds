@@ -1,23 +1,20 @@
 'use client';
 
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Image from 'next/image';
 
 import CustomGrid from '@/components/CustomGrid';
+import Header from '@/components/Header';
 import { Wave } from '@/components/Wave';
 
 export default function Home() {
   return (
     <main className="flex min-h-screen w-full flex-col items-center justify-between">
       <div className="w-full flex-grow bg-white">
-        <div className="flex justify-between px-20 py-10">
-          <Image alt="logo" height={40} src="/images/logo.svg" width={40} />
-          <ConnectButton />
-        </div>
+        <Header />
         <div className="my-4 flex w-full items-center justify-center text-3xl text-green-600">
           Web3 Sounds
         </div>
-        <div className="w-fullr flex items-center justify-center text-3xl">
+        <div className="flex w-full items-center justify-center text-3xl">
           <h1 className="text-green-600">永久记录每一个人的声音</h1>
           {/* <Image alt="logo" height={40} src="/images/soundWave.svg" width={40} /> */}
           <Wave />
@@ -27,7 +24,7 @@ export default function Home() {
         <CustomGrid />
         <a
           className="mt-16 flex h-10 items-center justify-center text-xl text-purple-400 underline hover:text-2xl"
-          href="/uploader"
+          href="/upload"
         >
           记录你的声音
         </a>

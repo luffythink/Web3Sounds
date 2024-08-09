@@ -44,7 +44,7 @@
     "react/self-closing-comp": ["error", { "component": true, "html": true }],
     "react/jsx-no-leaked-render": ["error", { "validStrategies": ["coerce", "ternary"] }],
     "react/jsx-curly-brace-presence": ["error", { "props": "never", "children": "never" }],
-    "no-unused-vars": "off",
+    // "no-unused-vars": "off",
     // "unused-imports/no-unused-vars": [
     //   "error",
     //   {

@@ -13,7 +13,7 @@ if (typeof window !== 'undefined') {
 const stringToHex = (s: string): string => ethers.hexlify(ethers.toUtf8Bytes(s));
 
 export const FileContract = async (address: string) => {
-  console.log('address', address);
+  // console.log('address', address);
   const provider = new ethers.BrowserProvider(window.ethereum);
   const contract = new ethers.Contract(Espoir.ADDRESS, Espoir.ABI, provider);
 
@@ -45,8 +45,8 @@ const clearOldFile = async (
       // 删除旧文件
       const tx = await fileContract.remove(hexName);
 
-      console.log(`Remove file: ${hexName}`);
-      console.log(`Transaction Id: ${tx.hash}`);
+      // console.log(`Remove file: ${hexName}`);
+      // console.log(`Transaction Id: ${tx.hash}`);
       const receipt = await tx.wait();
 
       return receipt.status === 1;
@@ -84,9 +84,10 @@ export const request = async ({
   onSuccess
 }: RequestParams) => {
   const rawFile = file.raw;
-  let content = await rawFile.arrayBuffer();
+  // let content = await rawFile.arrayBuffer();
 
-  content = Buffer.from(content);
+  // content = Buffer.from(new Uint8Array(content));
+  let content: Buffer = Buffer.from(new Uint8Array(await rawFile.arrayBuffer()));
 
   // 文件名
   const name = dirPath + rawFile.name;
@@ -98,12 +99,14 @@ export const request = async ({
   if (fileSize > chunkLength) {
     const chunkSize = Math.ceil(fileSize / chunkLength);
 
+    // ts-ignore
     chunks = bufferChunk(content, chunkSize);
   } else {
+    // ts-ignore
     chunks.push(content);
   }
 
-  const fileContract = await FileContract(contractAddress);
+  const fileContract = (await FileContract(contractAddress)) as ethers.Contract;
   const clear = await clearOldFile(fileContract, chunks.length, hexName);
 
   if (!clear) {
@@ -114,13 +117,13 @@ export const request = async ({
 
   let uploadState = true;
 
-  for (const [index, chunk] of chunks.entries()) {
+  for (const [index, chunk] of Array.from(chunks.entries())) {
     const hexData = '0x' + chunk.toString('hex');
     const localHash = '0x' + sha3(chunk);
     const hash = await fileContract.getChunkHash(hexName, index);
 
     if (localHash === hash) {
-      console.log(`File ${name} chunkId: ${index}: The data is not changed.`);
+      // console.log(`File ${name} chunkId: ${index}: The data is not changed.`);
       onProgress({ percent: index + 1 });
       continue;
     }
@@ -129,7 +132,7 @@ export const request = async ({
       // 文件被移除或改变
       const tx = await fileContract.writeChunk(hexName, hexType, index, hexData);
 
-      console.log(`Transaction Id: ${tx.hash}`);
+      // console.log(`Transaction Id: ${tx.hash}`);
       const receipt = await tx.wait();
 
       if (!receipt.status) {
@@ -138,7 +141,7 @@ export const request = async ({
       }
       onProgress({ percent: index + 1 });
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       uploadState = false;
       break;
     }

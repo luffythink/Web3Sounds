@@ -53,7 +53,7 @@
 
 **发起者：**[Oscar](https://github.com/luffythink) 主产品设计、[Derick](https://github.com/DerickIT) 主智能合约设计、[Cora](https://github.com/CHENFANGC) 主前端 
 
-**Demo 链接：**
+**Demo 链接：**https://sounds.w3q.w3q-g.w3link.io/index.html
 
 **产品共创记录**：
 

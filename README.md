@@ -57,9 +57,9 @@
 
 ## 共创团队
 
-基于 [LXDAO & EthStorage Web3URL 残酷共学 1st](https://github.com/IntensiveCoLearning/Web3-URL)，希望更多 Buider 加入进来。
+基于 [LXDAO & EthStorage Web3URL 残酷共学 1st](https://github.com/IntensiveCoLearning/Web3-URL)，希望更多 Buidler 加入进来。
 
-主产品设计：[Oscar](https://github.com/luffythink) 
+产品设计：[Oscar](https://github.com/luffythink) 
 
 智能合约设计：[Derick](https://github.com/DerickIT) 
 

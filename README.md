@@ -49,17 +49,18 @@
 
 ## 共创团队
 
-基于 LXDAO X EthStorage Web3URL 残酷共学 1st
+基于 [LXDAO & EthStorage Web3URL 残酷共学 1st](https://github.com/IntensiveCoLearning/Web3-URL)
 
 **发起者：**[Oscar](https://github.com/luffythink) 主产品设计、[Derick](https://github.com/DerickIT) 主智能合约设计、[Cora](https://github.com/CHENFANGC) 主前端
 
-**Slides**: 
+
 
 **Demo 链接：** https://sounds.w3q.w3q-g.w3link.io/index.html
 
-**产品共创记录**：
+**产品共创**：
 
-- [产品进度及共创记录](https://github.com/luffythink/Web3Sounds/blob/main/w3doc/%E4%BA%A7%E5%93%81%E5%85%B1%E5%88%9B%E8%AE%B0%E5%BD%95.md)
+- [产品演示 Slides](https://github.com/luffythink/Web3Sounds/blob/main/w3doc/Slides.pdf)
+- [产品记录](https://github.com/luffythink/Web3Sounds/blob/main/w3doc/%E4%BA%A7%E5%93%81%E5%85%B1%E5%88%9B%E8%AE%B0%E5%BD%95.md)
 - [用户旅程](https://github.com/luffythink/Web3Sounds/blob/main/w3doc/User_journey.md)
 
 ## 共建计划
